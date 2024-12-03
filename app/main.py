@@ -1,12 +1,12 @@
 from fastapi import FastAPI, File, UploadFile, Query, HTTPException
-from .detection import utils
+from .detection import ml_detection, utils
 from contextlib import asynccontextmanager
 from typing import Optional
 
 
 def detection(detr_processor, detr_model, image_bytes):
     # Object detection
-    results = utils.object_detection(detr_processor, detr_model, image_bytes)
+    results = ml_detection.object_detection(detr_processor, detr_model, image_bytes)
 
     # Convert dictionary of tensors to JSON
     result_json = utils.convert_tensor_dict_to_json(results)
@@ -20,9 +20,9 @@ def detection(detr_processor, detr_model, image_bytes):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load the ML model
-    # ml_detr = utils.load_model()
-    app.processor50, app.model50 = utils.load_model("facebook/detr-resnet-50")
-    app.processor101, app.model101 = utils.load_model("facebook/detr-resnet-101")
+    # ml_detr = ml_detection.load_model()
+    app.processor50, app.model50 = ml_detection.load_model("facebook/detr-resnet-50")
+    app.processor101, app.model101 = ml_detection.load_model("facebook/detr-resnet-101")
 
     yield
     # Clean up the ML model and release the resources
