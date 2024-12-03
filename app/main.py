@@ -1,6 +1,17 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Query, HTTPException
 from .detection import utils
 from contextlib import asynccontextmanager
+from typing import Optional
+
+
+def detection(detr_processor, detr_model, image_bytes):
+    # Object detection
+    results = utils.object_detection(detr_processor, detr_model, image_bytes)
+
+    # Convert dictionary of tensors to JSON
+    result_json = utils.convert_tensor_dict_to_json(results)
+
+    return result_json
 
 
 # Example with global variable as dict
@@ -10,11 +21,13 @@ from contextlib import asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load the ML model
     # ml_detr = utils.load_model()
-    app.processor, app.model = utils.load_model()
+    app.processor50, app.model50 = utils.load_model("facebook/detr-resnet-50")
+    app.processor101, app.model101 = utils.load_model("facebook/detr-resnet-101")
+
     yield
     # Clean up the ML model and release the resources
-    del app.processor
-    del app.model
+    del app.processor50, app.model50
+    del app.processor101, app.model101
     # ml_detr.clear()
 
 
@@ -22,7 +35,7 @@ app = FastAPI(
     lifespan=lifespan,
     title="Object detection",
     description="Object detection on COCO dataset",
-    version="0.1",
+    version="1.0",
 )
 
 
@@ -30,21 +43,26 @@ app = FastAPI(
 def home():
     return {"message": "Welcome to the object detection API"}
 
+@app.get("/status")
+def info():
+    return {"status": "ok"}
 
-@app.get("/api/v1/info")
+@app.get("/info")
 def info():
     return {"name": "object-detection", "description": "object detection on COCO dataset"}
 
 
+# Detection with optional model type
 @app.post("/api/v1/detect")
-async def detect(image: UploadFile = File(...)):
+async def detect(image: UploadFile = File(...), model: Optional[str] = Query(None)):
     # Read the image file
     image_bytes = await image.read()
 
-    # Object detection
-    results = utils.object_detection(app.processor, app.model, image_bytes)
-
-    # Convert dictionary of tensors to JSON
-    result_json = utils.convert_tensor_dict_to_json(results)
-
-    return result_json
+    # ML detection
+    if (model is None) or (model == "detr-resnet-50"):
+        output_json = detection(app.processor50, app.model50, image_bytes)
+    elif model == "detr-resnet-101":
+        output_json = detection(app.processor101, app.model101, image_bytes)
+    else:
+        raise HTTPException(status_code=400, detail="Incorrect model type")
+    return output_json
