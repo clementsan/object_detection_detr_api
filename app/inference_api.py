@@ -5,6 +5,11 @@ import argparse
 import sys
 
 
+# Default examples
+# api_url = "http://0.0.0.0:8000/api/v1/detect"
+# file = "../tests/data/savanna.jpg"
+
+
 def arg_parser():
     """Parse arguments"""
 
@@ -24,10 +29,6 @@ def main(args=None):
     # Use the arguments
     if args.verbose:
         print(f'Input file: {args.file}')
-
-    # Default examples
-    # api_url = "http://0.0.0.0:8000/api/v1/detect"
-    # file = "../tests/data/savanna.jpg"
 
     # Load image
     with open(args.file, 'rb') as image_file:
