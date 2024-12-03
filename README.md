@@ -22,17 +22,17 @@ Manual command line in production:
 
 Command lines:
  - Endpoint "/":
-> curl -X 'GET' \
-  'http://127.0.0.1:8000/' \
-  -H 'accept: application/json'
+> curl -X 'GET' -H 'accept: application/json' 'http://127.0.0.1:8000/'
 
-- Endpoint "/api/v1/info":
-> curl -X 'GET' \
-  'http://127.0.0.1:8000/api/v1/info' \
-  -H 'accept: application/json'
+- Endpoint "/info":
+> curl -X 'GET' -H 'accept: application/json' 'http://127.0.0.1:8000/info'
+  
 
  - Endpoint "/api/v1/detect":
 >  curl -X POST -F "image=@./tests/data/savanna.jpg" http://127.0.0.1:8000/api/v1/detect
+
+ - Endpoint "/api/v1/detect" with optional model type (e.g. detr-resnet-50 or detr-resnet-101):
+>  curl -X POST -F "image=@./tests/data/savanna.jpg" http://127.0.0.1:8000/api/v1/detect?model=detr-resnet-50
 
 
 ### 3. Run API query via python script
@@ -63,9 +63,8 @@ Command lines:
  - Endpoint "/":
 > curl -X 'GET' 'http://0.0.0.0:8000/' -H 'accept: application/json'
 
- - Endpoint "/api/v1/info":
-> curl -X 'GET' 'http://0.0.0.0:8000/api/v1/info' \
-  -H 'accept: application/json'
+ - Endpoint "/info":
+> curl -X 'GET' -H 'accept: application/json' 'http://0.0.0.0:8000/info'
 
  - Endpoint "/api/v1/detect":
 >  curl -X 'POST' -F "image=@./tests/data/savanna.jpg" http://0.0.0.0:8000/api/v1/detect 
