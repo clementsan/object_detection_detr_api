@@ -7,13 +7,13 @@ import io
 import json
 
 
-def load_model():
+def load_model(model_uri: str):
     """Load DETR Detection-Transformer model"""
     """Doc: https://huggingface.co/docs/transformers/en/model_doc/detr"""
 
     # you can specify the revision tag if you don't want the timm dependency
-    processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
-    model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
+    processor = DetrImageProcessor.from_pretrained(model_uri, revision="no_timm")
+    model = DetrForObjectDetection.from_pretrained(model_uri, revision="no_timm")
     return processor, model
 
 
