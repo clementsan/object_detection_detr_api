@@ -16,11 +16,11 @@ def test_home():
     assert response.json() == {"message": "Welcome to the object detection API"}
 
 
-# Test API - /api/v1/info endpoint
+# Test API - /info endpoint
 def test_info():
     client = TestClient(app)
-    logging.info("Testing /api/v1/info endpoint")
-    response = client.get("/api/v1/info")
+    logging.info("Testing /info endpoint")
+    response = client.get("/info")
     logging.debug(f"Response status: {response.status_code}")
     logging.debug(f"Response JSON: {response.json()}")
     response_gt = {"name": "object-detection", "description": "object detection on COCO dataset"}
@@ -36,7 +36,7 @@ def test_detect():
         # Get the directory of the current test file
         test_dir = os.path.dirname(os.path.abspath(__file__))
         # Construct the image path relative to the test directory
-        image_path = os.path.join(test_dir, 'data', 'COCO_Cats.jpg')
+        image_path = os.path.join(test_dir, 'data', 'savanna.jpg')
 
         with open(image_path, "rb") as f:
             response = client.post("/api/v1/detect", files={"image": ("test_image.png", f, "image/png")})
@@ -47,7 +47,7 @@ def test_detect():
     # Convert JSON string to Python dictionary
     response_data = json.loads(response.json())
     response_keys = list(response_data.keys())
-    gt_keys = ['scores','labels','boxes']
+    gt_keys = ['scores', 'labels', 'boxes']
     # print('response_data', response_data)
     # print('response_keys', response_keys)
 
