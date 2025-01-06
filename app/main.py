@@ -58,6 +58,8 @@ async def detect(image: UploadFile = File(...), model: Optional[str] = Query(Non
     # Read the image file
     image_bytes = await image.read()
 
+    print("API ML model: ", model)
+
     # ML detection
     if (model is None) or (model == "detr-resnet-50"):
         output_json = detection(app.processor50, app.model50, image_bytes)
