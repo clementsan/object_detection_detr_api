@@ -16,6 +16,7 @@ Machine learning models:
    - [Build image and run docker container](#21-build-image-and-run-docker-container)
    - [Run query via API](#22-run-query-via-api)
  - [Deployment on Docker hub](#3-deployment-on-docker-hub)
+ - [MLOps pipeline via GitHub actions](#4-mlops-pipeline-via-github-actions)
 
 
 ## 1. Direct execution
@@ -96,10 +97,10 @@ This FastAPI application is available as a Docker container on Docker hub
 URL: https://hub.docker.com/r/cvachet/object-detection-detr-api
 
 
-## 4. MLOps pipeline via github action
+## 4. MLOps pipeline via GitHub actions
 
 Github actions were created to enable Continuous Integration (CI) and Continuous Deployment (CD) for this FastAPI app. 
 
 YAML files:
- - [ci_python.yml](.github/workflows/ci_python.yml)
- - [publish_docker_image.yaml](.github/workflows/publish_docker_image.yaml)
+ - Python testing suite: [ci_python.yml](.github/workflows/ci_python.yml)
+ - Pushing to docker: [publish_docker_image.yaml](.github/workflows/publish_docker_image.yaml)
