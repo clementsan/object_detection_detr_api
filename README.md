@@ -95,3 +95,11 @@ This FastAPI application is available as a Docker container on Docker hub
 
 URL: https://hub.docker.com/r/cvachet/object-detection-detr-api
 
+
+## 4. MLOps pipeline via github action
+
+Github actions were created to enable Continuous Integration (CI) and Continuous Deployment (CD) for this FastAPI app. 
+
+YAML files:
+ - [ci_python.yml](.github/workflows/ci_python.yml)
+ - [publish_docker_image.yaml](.github/workflows/publish_docker_image.yaml)
