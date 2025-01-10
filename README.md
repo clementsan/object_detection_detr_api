@@ -1,11 +1,18 @@
 # Object detection via FastAPI
 
-Aim: AI-driven object detection via FastAPI (on COCO image dataset)
+[![](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/cvachet/object-detection-detr-api)](https://hub.docker.com/repository/docker/cvachet/object-detection-detr-api)
 
-Machine learning models:
+![example workflow](https://github.com/clementsan/object_detection_detr_api/actions/workflows/ci_python.yml/badge.svg)
+![example workflow](https://github.com/clementsan/object_detection_detr_api/actions/workflows/publish_docker_image.yaml/badge.svg)
+
+**Aim:** AI-driven object detection via FastAPI (on COCO image dataset)
+
+**Machine learning models:**
  - facebook/detr-resnet-50
  - facebook/detr-resnet-101
 
+------
 ### Table of contents:
  - [Direct execution](#1-direct-execution)
    - [Run FastAPI interface](#11-run-fastapi-interface)
@@ -18,6 +25,7 @@ Machine learning models:
  - [Deployment on Docker hub](#3-deployment-on-docker-hub)
  - [MLOps pipeline via GitHub actions](#4-mlops-pipeline-via-github-actions)
 
+----
 
 ## 1. Direct execution
 
