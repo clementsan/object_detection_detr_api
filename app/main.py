@@ -44,7 +44,7 @@ def home():
     return {"message": "Welcome to the object detection API"}
 
 @app.get("/status")
-def info():
+def status():
     return {"status": "ok"}
 
 @app.get("/info")
